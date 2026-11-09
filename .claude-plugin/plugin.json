@@ -5,6 +5,6 @@
   "author": {
     "name": "Fernando del Río"
   },
-  "license": "MIT",
+  "license": "Apache-2.0",
   "keywords": ["agents", "spec-driven", "code-review", "full-stack", "quality-gates"]
 }

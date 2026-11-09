@@ -94,9 +94,26 @@ Los casos con fallo trabajan sobre texto, sin repositorio; no sustituyen a una r
 - Las cabeceras de los agentes (`model`, `effort`, `maxTurns`) son una propuesta razonable,
   no una verdad: ajústalas a tu cuenta y a tu coste.
 
+## Qué viene (todavía no existe)
+
+Este kit es para **una persona**. Para equipos, startups o consultoras faltaría una segunda
+capa, pensada como un plugin aparte para no tocar este núcleo:
+
+- puertas que corran solas en CI en cada pull request, en vez de lanzarlas a mano;
+- aislamiento por tarea para trabajar varias personas y agentes a la vez;
+- perfiles por stack (Java, .NET, Node…) en las puertas;
+- conexión con tickets (Jira, Linear) y trazabilidad ticket → spec → pull request;
+- control de coste, registro de lo que hizo cada agente y distribución con versiones.
+
+No se construye hasta que alguien lo pida con un caso real. Lo más delicado no lo resuelve ningún
+agente: qué datos de un cliente pueden llegar a un modelo y cómo se audita. Es una decisión del
+cliente y de su asesoría legal.
+
 ## Licencia
 
-MIT.
+Apache License 2.0 (texto completo en [`LICENSE`](LICENSE), atribución en [`NOTICE`](NOTICE)).
+Puedes usarlo, modificarlo y distribuirlo, también en proyectos comerciales, conservando el aviso
+de copyright. Incluye una concesión expresa de patentes. Se ofrece «tal cual», sin garantía.
 
 ## Estado de las evaluaciones (primera pasada, 2026-11-09)
 
