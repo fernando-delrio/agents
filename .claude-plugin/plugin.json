@@ -1,0 +1,10 @@
+{
+  "name": "equipo-solo",
+  "version": "0.1.0",
+  "description": "Equipo de agentes para un desarrollador full stack que trabaja solo: especificar, implementar, pasar puertas de calidad en paralelo y cerrar cada incremento.",
+  "author": {
+    "name": "Fernando del Río"
+  },
+  "license": "MIT",
+  "keywords": ["agents", "spec-driven", "code-review", "full-stack", "quality-gates"]
+}
