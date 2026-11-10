@@ -1,0 +1,30 @@
+{
+  "name": "lead-flow",
+  "version": "0.1.0",
+  "description": "Control del lead: puertas de revisión para equipos que usan agentes de IA.",
+  "type": "module",
+  "bin": {
+    "lead-flow": "dist/index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.6",
+    "eslint": "^10.14.0",
+    "globals": "^17.14.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^8.7.5",
+    "yaml": "^2.9.1"
+  }
+}

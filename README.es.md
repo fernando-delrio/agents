@@ -17,17 +17,17 @@ idea → planificador → revisor (spec) ✋ → planificador (plan + tareas) �
 ```
 
 ✋ = decides tú. **Solo el implementador escribe código**; todos los demás son de solo
-lectura. El porqué de cada decisión está en [`doc/FLUJO.md`](doc/FLUJO.md).
+lectura. El porqué de cada decisión está en [`plugin/doc/FLUJO.md`](plugin/doc/FLUJO.md).
 
 ## Qué trae
 
 | Pieza | Contenido |
 |---|---|
-| `agents/` | 7 agentes: `planificador`, `revisor`, `implementador`, `puerta-seguridad`, `puerta-rendimiento`, `revisor-diseno`, `cierre-incremento` |
-| `evals/` | 6 casos de evaluación: diffs con fallos conocidos que las puertas deben vetar, y un diff limpio para cazar falsas alarmas |
-| `AGENTS.template.md` | Plantilla del archivo de entrada corto (60-100 líneas) |
-| `CLAUDE.template.md` | Plantilla que lo importa y añade el flujo de agentes |
-| `doc/FLUJO.md` | Decisiones, su porqué, lo que se dejó fuera y las fuentes |
+| `plugin/agents/` | 7 agentes: `planificador`, `revisor`, `implementador`, `puerta-seguridad`, `puerta-rendimiento`, `revisor-diseno`, `cierre-incremento` |
+| `plugin/evals/` | 6 casos de evaluación: diffs con fallos conocidos que las puertas deben vetar, y un diff limpio para cazar falsas alarmas |
+| `plugin/AGENTS.template.md` | Plantilla del archivo de entrada corto (60-100 líneas) |
+| `plugin/CLAUDE.template.md` | Plantilla que lo importa y añade el flujo de agentes |
+| `plugin/doc/FLUJO.md` | Decisiones, su porqué, lo que se dejó fuera y las fuentes |
 
 ## Instalarlo
 
@@ -50,8 +50,8 @@ deben salir con el prefijo `equipo-solo:`.
 
 ## Adaptarlo a tu proyecto (15 minutos)
 
-1. Copia `AGENTS.template.md` a la raíz de tu repo como `AGENTS.md` y rellena sobre todo
-   **«Probar»**: los agentes ejecutan exactamente esos comandos. Y `CLAUDE.template.md` como
+1. Copia `plugin/AGENTS.template.md` a la raíz de tu repo como `AGENTS.md` y rellena sobre todo
+   **«Probar»**: los agentes ejecutan exactamente esos comandos. Y `plugin/CLAUDE.template.md` como
    `CLAUDE.md`.
 2. Escribe tus **líneas rojas de dominio** (lo que nunca se dice o hace en tu negocio) y, si
    puedes, una prueba automática que las haga cumplir.
@@ -75,10 +75,10 @@ deben salir con el prefijo `equipo-solo:`.
 ## Evaluar los agentes
 
 ```bash
-claude plugin eval /ruta/a/kit-agentes-fullstack --runs 3 --max-cost-usd 5
+claude plugin eval /ruta/a/kit-agentes-fullstack/plugin --runs 3 --max-cost-usd 5
 ```
 
-Cada caso de `evals/` le pasa a un agente un diff con un fallo conocido y comprueba que lo
+Cada caso de `plugin/evals/` le pasa a un agente un diff con un fallo conocido y comprueba que lo
 veta. Úsalo **cada vez que cambies el texto de un agente**: si un caso que pasaba deja de
 pasar, el cambio lo ha empeorado. Para añadir un caso: `claude plugin eval init --bare nombre`.
 Los casos con fallo trabajan sobre texto, sin repositorio; no sustituyen a una revisión real.
