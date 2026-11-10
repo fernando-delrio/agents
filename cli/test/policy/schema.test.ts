@@ -22,6 +22,13 @@ describe('validatePolicy', () => {
     expect(message).toContain('"aprobacion"')
   })
 
+  it('rejects an empty command naming the key', () => {
+    const raw = readFixture()
+    const stack = { ...raw.stack, comandos: { ...raw.stack.comandos, build: '' } }
+    const message = failureMessage({ ...raw, stack })
+    expect(message).toContain('stack.comandos.build: se esperaba un texto no vacío')
+  })
+
   it('rejects an unknown approver listing the allowed ones', () => {
     const raw = readFixture()
     const message = failureMessage({ ...raw, aprobacion: { ...raw.aprobacion, alto: 'jefe' } })
