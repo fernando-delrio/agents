@@ -1,0 +1,43 @@
+tema: herramientas
+stack: java-spring
+pregunta: ¿Con qué herramientas se ejecutan las pruebas, el lint, la compilación y la auditoría de dependencias?
+opciones:
+  - id: maven-junit-checkstyle-dependency-check
+    nombre: Maven + JUnit + Checkstyle + OWASP Dependency-Check
+    implica: >-
+      Comandos de la política. Pruebas: mvn test (JUnit Jupiter, incluido en spring-boot-starter-test).
+      Lint: mvn checkstyle:check. Build: mvn package. Auditoría: mvn verify con el plugin
+      dependency-check-maven en la fase verify (su objetivo check genera dependency-check-report.html).
+    comandos:
+      pruebas: "mvn test"
+      lint: "mvn checkstyle:check"
+      build: "mvn package"
+    pros:
+      - Maven tiene un ciclo de vida fijo y la configuración declarativa está en pom.xml.
+      - JUnit Jupiter y las pruebas de Spring Boot vienen en spring-boot-starter-test.
+      - Dependency-Check analiza las dependencias contra bases de vulnerabilidades públicas.
+    contras:
+      - La configuración está en XML (pom.xml) y es larga.
+      - Dependency-Check descarga y mantiene una base de datos local; la primera ejecución tarda y necesita red.
+      - Checkstyle comprueba estilo, no formatea el código.
+    docs: https://docs.spring.io/spring-boot/reference/testing/index.html
+    revisado: 2026-11-10
+  - id: gradle-junit-checkstyle-dependency-check
+    nombre: Gradle + JUnit + Checkstyle + OWASP Dependency-Check
+    implica: >-
+      Comandos de la política. Pruebas: ./gradlew test. Lint: ./gradlew checkstyleMain (el plugin
+      Checkstyle de Gradle). Build: ./gradlew build, que también ejecuta las comprobaciones.
+      Auditoría: ./gradlew dependencyCheckAnalyze con el plugin de Dependency-Check.
+    comandos:
+      pruebas: "./gradlew test"
+      lint: "./gradlew checkstyleMain"
+      build: "./gradlew build"
+    pros:
+      - La configuración se escribe como script (build.gradle en Groovy o build.gradle.kts en Kotlin).
+      - ./gradlew build ejecuta pruebas y comprobaciones juntas.
+    contras:
+      - Un script de build programable admite más variaciones entre proyectos.
+      - Dependency-Check descarga y mantiene una base de datos local; la primera ejecución tarda y necesita red.
+      - checkstyleMain solo revisa el código principal; las pruebas llevan otra tarea.
+    docs: https://docs.gradle.org/current/userguide/checkstyle_plugin.html
+    revisado: 2026-11-10

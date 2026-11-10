@@ -1,0 +1,43 @@
+tema: herramientas
+stack: php-laravel
+pregunta: ¿Con qué herramientas se ejecutan las pruebas, el lint, la compilación y la auditoría de dependencias?
+opciones:
+  - id: phpunit-pint-composer-audit
+    nombre: PHPUnit + Laravel Pint + composer audit
+    implica: >-
+      Comandos de la política. Pruebas: php artisan test (o ./vendor/bin/phpunit). Lint:
+      ./vendor/bin/pint --test, que falla si algún archivo no cumple el estilo sin modificarlo.
+      Build: composer install --no-dev --optimize-autoloader. Auditoría: composer audit, que sale con
+      código 1 si hay avisos de seguridad.
+    comandos:
+      pruebas: "php artisan test"
+      lint: "./vendor/bin/pint --test"
+      build: "composer install --no-dev --optimize-autoloader"
+    pros:
+      - Laravel trae PHPUnit configurado y Pint instalado en los proyectos nuevos.
+      - Pint se apoya en PHP CS Fixer y no necesita configuración para empezar.
+      - composer audit consulta los avisos de Packagist.
+    contras:
+      - PHPUnit escribe cada prueba como un método dentro de una clase.
+      - Pint aplica el estilo de Laravel; otro estilo exige un pint.json.
+    docs: https://laravel.com/docs/13.x/testing
+    revisado: 2026-11-10
+  - id: pest-phpcs-composer-audit
+    nombre: Pest + PHP_CodeSniffer + composer audit
+    implica: >-
+      Comandos de la política. Pruebas: ./vendor/bin/pest. Lint: phpcs (PHP_CodeSniffer, que usa
+      PSR-12 por defecto desde la versión 4.0.0); phpcbf corrige lo que puede. Build:
+      composer install --no-dev --optimize-autoloader. Auditoría: composer audit.
+    comandos:
+      pruebas: "./vendor/bin/pest"
+      lint: "phpcs"
+      build: "composer install --no-dev --optimize-autoloader"
+    pros:
+      - Pest escribe las pruebas con funciones test() y expect(), sobre el motor de PHPUnit.
+      - PHP_CodeSniffer comprueba contra un estándar público (PSR-12) y funciona en cualquier proyecto PHP, no solo en Laravel.
+    contras:
+      - Hay que instalar y configurar PHP_CodeSniffer; no viene con Laravel.
+      - PHP_CodeSniffer y Pint pueden discrepar en estilo si el equipo usa ambos.
+      - Pest es una capa más que el equipo tiene que aprender.
+    docs: https://pestphp.com/docs/installation
+    revisado: 2026-11-10

@@ -1,0 +1,41 @@
+tema: herramientas
+stack: node-nestjs
+pregunta: ¿Con qué herramientas se ejecutan las pruebas, el lint, la compilación y la auditoría de dependencias?
+opciones:
+  - id: vitest-eslint-npm-audit
+    nombre: Vitest + ESLint + npm audit
+    implica: >-
+      Comandos de la política. Pruebas: npm test (los proyectos nuevos de NestJS usan Vitest según su
+      documentación actual). Lint: npx eslint . Build: npm run build (nest build). Auditoría:
+      npm audit --audit-level=high.
+    comandos:
+      pruebas: "npm test"
+      lint: "npx eslint ."
+      build: "npm run build"
+    pros:
+      - La documentación actual de NestJS indica que los proyectos nuevos se generan con Vitest.
+      - Test.createTestingModule permite probar módulos con sus dependencias sustituidas.
+      - npm audit ya viene con npm.
+    contras:
+      - Los proyectos NestJS antiguos pueden estar configurados con otro ejecutor y habría que migrar.
+      - ESLint no formatea el código; si se quiere formato hace falta otra herramienta.
+      - npm audit solo cubre lo que está en el lockfile de npm.
+    docs: https://docs.nestjs.com/fundamentals/testing
+    revisado: 2026-11-10
+  - id: vitest-biome-pnpm-audit
+    nombre: Vitest + Biome + pnpm audit
+    implica: >-
+      Comandos de la política. Pruebas: vitest run. Lint: npx biome check . Build: pnpm build
+      (nest build). Auditoría: pnpm audit --audit-level high. Exige usar pnpm.
+    comandos:
+      pruebas: "vitest run"
+      lint: "npx biome check ."
+      build: "pnpm build"
+    pros:
+      - Biome hace el lint y el formato con una sola herramienta.
+      - pnpm audit puede limitarse a dependencias de producción con --prod.
+    contras:
+      - Biome no cubre todas las reglas de ESLint específicas de NestJS.
+      - Cambiar a pnpm obliga a todo el equipo y a la CI a usarlo.
+    docs: https://pnpm.io/cli/audit
+    revisado: 2026-11-10

@@ -1,0 +1,31 @@
+tema: autenticacion
+stack: python-fastapi
+pregunta: ¿Cómo se autentican las personas usuarias de la API?
+opciones:
+  - id: sesion-opaca
+    nombre: Zeta sesión opaca
+    implica: El servidor guarda la sesión y entrega solo un identificador aleatorio.
+    pros:
+      - Se puede revocar al instante.
+    contras:
+      - Exige almacenar el estado en el servidor.
+    docs: https://fastapi.tiangolo.com/tutorial/security/
+    revisado: 2026-09-01
+  - id: arbol-claves
+    nombre: Árbol de claves de API
+    implica: Cada cliente recibe una clave propia que se guarda con hash.
+    pros:
+      - Sencillo para integraciones entre servidores.
+    contras:
+      - No identifica a personas, solo a clientes.
+    docs: https://owasp.org/www-project-api-security/
+    revisado: 2026-08-15
+  - id: jwt
+    nombre: Bravo JWT firmado
+    implica: El servidor emite un token firmado que se valida sin consultar estado.
+    pros:
+      - No necesita almacén de sesiones.
+    contras:
+      - Revocarlo antes de que caduque es difícil.
+    docs: https://jwt.io/introduction
+    revisado: 2025-01-10
