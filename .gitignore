@@ -1,0 +1,4 @@
+.superpowers/
+plugin/evals/results/
+node_modules/
+dist/

@@ -8,7 +8,7 @@
     {
       "name": "equipo-solo",
       "description": "Planificador, revisor, implementador, puertas de seguridad y rendimiento, revisor de diseño y cierre de incremento, con casos de evaluación.",
-      "source": "./",
+      "source": "./plugin",
       "category": "development"
     }
   ]
