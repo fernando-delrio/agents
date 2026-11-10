@@ -12,3 +12,6 @@ export const MANAGED_BLOCK_END = 'lead-flow:fin'
 export const EVIDENCE_DIR = 'lead-flow-evidencias'
 export const REPORTS_BRANCH = 'informes'
 export const DIGEST_LABEL = 'parte'
+
+export const POLICY_PATH = '.lead/politica.yml'
+export const DECISIONS_DIR = '.lead/decisiones'

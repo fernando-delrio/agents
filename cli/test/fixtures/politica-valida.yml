@@ -1,0 +1,62 @@
+version: 1
+proyecto:
+  nombre: Tienda de ejemplo
+  tipo: nuevo
+  zona_horaria: Europe/Madrid
+equipo:
+  lead: ana-lead
+  scrum_master: luis-sm
+  qa:
+    - marta-qa
+  delegados:
+    - tema: pagos
+      persona: pedro-dev
+stack:
+  lenguajes:
+    - typescript
+  frameworks:
+    - react
+  comandos:
+    pruebas: npm test
+    lint: npm run lint
+    build: npm run build
+seguridad:
+  autenticacion: sesion opaca en servidor
+  requisitos:
+    - sin secretos en el codigo
+dependencias:
+  ecosistema: npm
+  permitidas:
+    - react
+  prohibidas:
+    - left-pad
+  licencias_permitidas:
+    - MIT
+    - Apache-2.0
+ramas:
+  principal: main
+  patron: ticket/<numero>-<resumen>
+riesgo:
+  alto:
+    - pagos
+    - autenticacion
+  bajo:
+    - textos
+  muestreo_1_de: 10
+aprobacion:
+  bajo: automatica
+  medio: companero
+  alto: lead
+permisos_temporales:
+  - dependencia: left-pad
+    ticket: 42
+    caduca: 2026-11-14
+    aprobado_por: ana-lead
+informes:
+  cliente: sprint
+parte:
+  hora_utc: "07:00"
+  espera_revision_horas: 24
+  sin_movimiento_dias: 3
+github:
+  modo: bloqueo
