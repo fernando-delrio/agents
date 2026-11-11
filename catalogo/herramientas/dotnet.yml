@@ -1,0 +1,43 @@
+tema: herramientas
+stack: dotnet
+pregunta: ¿Con qué herramientas se ejecutan las pruebas, el lint, la compilación y la auditoría de dependencias?
+opciones:
+  - id: dotnet-test-format-list-package
+    nombre: dotnet test + dotnet format + dotnet list package --vulnerable
+    implica: >-
+      Comandos de la política. Pruebas: dotnet test. Lint: dotnet format --verify-no-changes, que
+      termina con error si algún archivo cambiaría al formatearlo. Build: dotnet build -c Release.
+      Auditoría: dotnet list package --vulnerable --include-transitive (sin --include-transitive solo
+      revisa las dependencias directas).
+    comandos:
+      pruebas: "dotnet test"
+      lint: "dotnet format --verify-no-changes"
+      build: "dotnet build -c Release"
+    pros:
+      - Todo viene con el SDK de .NET; no hay herramientas que instalar.
+      - dotnet format usa el .editorconfig del repositorio.
+      - La auditoría consulta la base de avisos de nuget.org.
+    contras:
+      - dotnet list package --vulnerable informa pero no falla por sí solo; hay que leer su salida en la CI.
+      - dotnet format puede restaurar y compilar el proyecto y ejecutar sus analizadores; solo debe correr sobre código de confianza.
+    docs: https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-format
+    revisado: 2026-11-10
+  - id: dotnet-test-analyzers-nuget-audit
+    nombre: dotnet test + analizadores de Roslyn + NuGet Audit en restore
+    implica: >-
+      Comandos de la política. Pruebas: dotnet test. Lint: dotnet build -warnaserror -p:EnforceCodeStyleInBuild=true
+      (las reglas IDE se configuran en .editorconfig). Build: dotnet build -c Release. Auditoría: dotnet restore -p:AuditPipeline=true, con una condición
+      en el proyecto que convierte los avisos NU1901 a NU1904 en errores solo en esa tarea de la CI.
+    comandos:
+      pruebas: "dotnet test"
+      lint: "dotnet build -warnaserror -p:EnforceCodeStyleInBuild=true"
+      build: "dotnet build -c Release"
+    pros:
+      - Los avisos de seguridad de NuGet salen durante el restore y pueden hacer fallar la CI.
+      - Los analizadores comprueban calidad y seguridad del código durante la compilación.
+    contras:
+      - Exige editar los archivos del proyecto y el .editorconfig; son pasos de configuración adicionales.
+      - -warnaserror también convierte en error cualquier aviso nuevo que traiga una actualización del SDK.
+      - El nombre AuditPipeline es solo un ejemplo y se define en cada repositorio.
+    docs: https://learn.microsoft.com/en-us/nuget/concepts/auditing-packages
+    revisado: 2026-11-10

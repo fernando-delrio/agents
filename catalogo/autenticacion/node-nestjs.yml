@@ -1,0 +1,40 @@
+tema: autenticacion
+stack: node-nestjs
+pregunta: ¿Cómo se identifica a quien llama a la API y dónde se guarda su sesión?
+opciones:
+  - id: sesion-servidor-express-session
+    nombre: Sesión en el servidor con express-session
+    implica: >-
+      NestJS sobre Express registra el middleware express-session de forma global y lee la sesión con
+      @Req() o @Session(). Hace falta un almacén persistente, porque la documentación de NestJS avisa de
+      que el almacén en memoria por defecto no está pensado para producción. Las contraseñas se guardan
+      con hash mediante el paquete argon2 o bcrypt; es un requisito de la política.
+    pros:
+      - La sesión se puede cerrar o anular en el servidor al instante.
+      - El navegador solo lleva un identificador, sin datos del usuario.
+      - Encaja con aplicaciones web con navegador.
+    contras:
+      - Exige un almacén de sesiones compartido si hay más de una instancia.
+      - Cada petición consulta ese almacén.
+      - Con cookies hay que proteger además contra CSRF.
+      - Solo aplica si la aplicación usa el adaptador de Express.
+    docs: https://docs.nestjs.com/techniques/session
+    revisado: 2026-11-10
+  - id: jwt-nestjs
+    nombre: Tokens JWT en la cabecera Authorization
+    implica: >-
+      La API emite un token firmado (JWT) al iniciar sesión y lo comprueba en cada petición. Según la
+      documentación oficial de NestJS, el token lo emite TokenService.issue() y lo comprueba
+      JwtBearerProvider, ambos del paquete @nestjs/authentication (npm i @nestjs/authentication); no es
+      el paquete @nestjs/jwt. Las contraseñas se guardan con hash; es un requisito de la política. La
+      documentación usa PasswordHasher, que aplica scrypt de node:crypto; los paquetes argon2 o bcrypt
+      sirven igual.
+    pros:
+      - El servidor no guarda estado de sesión del token de acceso.
+      - Encaja con aplicaciones móviles y con servicios que llaman a la API.
+    contras:
+      - Un token de acceso ya emitido no se puede anular antes de que caduque, salvo con una lista de revocación.
+      - Hay que decidir la caducidad, la rotación de claves y dónde guarda el cliente el token.
+      - Los refresh tokens, si se usan, sí requieren guardar estado en el servidor.
+    docs: https://docs.nestjs.com/security/authentication
+    revisado: 2026-11-10

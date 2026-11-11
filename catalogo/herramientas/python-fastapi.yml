@@ -1,0 +1,43 @@
+tema: herramientas
+stack: python-fastapi
+pregunta: ¿Con qué herramientas se ejecutan las pruebas, el lint, la compilación y la auditoría de dependencias?
+opciones:
+  - id: pytest-ruff-pip-audit
+    nombre: pytest + ruff + pip-audit
+    implica: >-
+      Comandos de la política. Pruebas: pytest. Lint: ruff check . y ruff format --check . (el segundo
+      falla si algún archivo no está formateado). Build: python -m build, que solo aplica si el proyecto
+      se publica como paquete. Auditoría: pip-audit -r requirements.txt.
+    comandos:
+      pruebas: "pytest"
+      lint: "ruff check . && ruff format --check ."
+      build: "python -m build"
+    pros:
+      - pytest escribe las pruebas como funciones y usa la sentencia assert de Python.
+      - ruff hace el lint y el formato con una sola herramienta.
+      - pip-audit consulta la base de avisos de PyPA y devuelve error si encuentra vulnerabilidades.
+    contras:
+      - Son tres dependencias de desarrollo que hay que fijar y actualizar.
+      - ruff no sustituye a un comprobador de tipos como mypy.
+      - pip-audit solo revisa lo que está en requirements.txt o en el entorno.
+    docs: https://docs.pytest.org/en/stable/
+    revisado: 2026-11-10
+  - id: unittest-ruff-pip-audit
+    nombre: unittest (biblioteca estándar) + ruff + pip-audit
+    implica: >-
+      Comandos de la política. Pruebas: python -m unittest discover. Lint: ruff check . y
+      ruff format --check . Build: python -m compileall . (comprueba que el código compila; no
+      genera un paquete). Auditoría: pip-audit -r requirements.txt. Las pruebas no añaden
+      dependencias, pero las pruebas asíncronas de FastAPI exigen unittest.IsolatedAsyncioTestCase.
+    comandos:
+      pruebas: "python -m unittest discover"
+      lint: "ruff check . && ruff format --check ."
+      build: "python -m compileall ."
+    pros:
+      - unittest viene con Python; no hay paquete de pruebas que instalar ni actualizar.
+      - El resto de la cadena es la misma que con pytest.
+    contras:
+      - Las aserciones son métodos (self.assertEqual) y no hay fixtures de pytest.
+      - Los plugins de pytest no están disponibles.
+    docs: https://docs.python.org/3/library/unittest.html
+    revisado: 2026-11-10

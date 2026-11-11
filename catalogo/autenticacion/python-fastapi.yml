@@ -1,0 +1,40 @@
+tema: autenticacion
+stack: python-fastapi
+pregunta: ¿Cómo se identifica a quien llama a la API y dónde se guarda su sesión?
+opciones:
+  - id: oauth2-bearer-pyjwt
+    nombre: OAuth2 con tokens Bearer y PyJWT
+    implica: >-
+      La API entrega un token firmado (JWT) al iniciar sesión y el cliente lo envía en la cabecera
+      Authorization: Bearer. Se usa fastapi.security (OAuth2PasswordBearer) y la librería PyJWT para
+      firmar y comprobar. Las contraseñas se guardan con hash mediante pwdlib, con Argon2
+      (pip install 'pwdlib[argon2]') o bcrypt; es un requisito de la política, no se guardan en claro.
+    pros:
+      - El servidor no guarda estado de sesión; cualquier instancia puede validar el token.
+      - Encaja con clientes que no son un navegador (aplicaciones móviles, otros servicios).
+      - FastAPI lo integra en su documentación automática de la API.
+    contras:
+      - Un token ya emitido no se puede anular antes de que caduque, salvo que se añada una lista de revocación.
+      - Hay que decidir y mantener la caducidad, la rotación de claves y el almacenamiento del token en el cliente.
+      - Un error al comprobar la firma o el algoritmo deja pasar tokens falsos.
+    docs: https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/
+    revisado: 2026-11-10
+  - id: sesion-opaca-servidor
+    nombre: Sesión opaca guardada en el servidor
+    implica: >-
+      Al iniciar sesión se genera un identificador aleatorio sin contenido que se envía en una cookie
+      (HttpOnly, Secure, SameSite); los datos de la sesión viven en el servidor (base de datos o Redis).
+      Las contraseñas se guardan con hash mediante pwdlib, con Argon2 (pip install 'pwdlib[argon2]')
+      o bcrypt; es un requisito de la política. FastAPI no trae este mecanismo hecho: se escribe con
+      dependencias propias.
+    pros:
+      - La sesión se puede cerrar o anular en el servidor al instante.
+      - El navegador no expone el identificador a scripts si la cookie es HttpOnly.
+      - Lo que viaja en la cookie no revela datos del usuario.
+    contras:
+      - Exige un almacén compartido si hay varias instancias del servidor, con su coste y su disponibilidad.
+      - Cada petición consulta el almacén de sesiones.
+      - Con cookies hay que proteger además contra CSRF.
+      - Hay que escribirlo y probarlo; no viene incluido en fastapi.security.
+    docs: https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+    revisado: 2026-11-10

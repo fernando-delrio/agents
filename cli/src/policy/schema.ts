@@ -126,6 +126,11 @@ const checkText: Check = (value, path) => {
   return expected(path, 'un texto', value)
 }
 
+const checkNonEmptyText: Check = (value, path) => {
+  if (typeof value === 'string' && value.trim() !== '') return []
+  return expected(path, 'un texto no vacío', value)
+}
+
 const checkPositiveInteger: Check = (value, path) => {
   if (Number.isInteger(value) && (value as number) > 0) return []
   return expected(path, 'un número entero mayor que 0', value)
@@ -201,7 +206,11 @@ const POLICY_SHAPE = checkObject({
   stack: checkObject({
     lenguajes: checkTexts,
     frameworks: checkTexts,
-    comandos: checkObject({ pruebas: checkText, lint: checkText, build: checkText }),
+    comandos: checkObject({
+      pruebas: checkNonEmptyText,
+      lint: checkNonEmptyText,
+      build: checkNonEmptyText,
+    }),
   }),
   seguridad: checkObject({ autenticacion: checkText, requisitos: checkTexts }),
   dependencias: checkObject({

@@ -1,0 +1,38 @@
+tema: autenticacion
+stack: node-express
+pregunta: ¿Cómo se identifica a quien llama a la API y dónde se guarda su sesión?
+opciones:
+  - id: sesion-servidor-express-session
+    nombre: Sesión en el servidor con express-session
+    implica: >-
+      El middleware express-session guarda los datos en el servidor y envía al navegador solo el
+      identificador en una cookie. Hace falta un almacén persistente (por ejemplo Redis o PostgreSQL),
+      porque el MemoryStore por defecto no está pensado para producción según su documentación. Las
+      contraseñas se guardan con hash mediante el paquete argon2 o bcrypt; es un requisito de la política.
+    pros:
+      - La sesión se puede cerrar o anular en el servidor al instante.
+      - El navegador solo lleva un identificador, sin datos del usuario.
+      - El navegador reenvía la cookie solo, sin código del cliente que gestione el token.
+    contras:
+      - Exige un almacén de sesiones compartido si hay más de un proceso o instancia.
+      - Cada petición consulta ese almacén.
+      - Con cookies hay que proteger además contra CSRF.
+      - Un cliente que no es un navegador tiene que gestionar la cookie.
+    docs: https://expressjs.com/en/resources/middleware/session.html
+    revisado: 2026-11-10
+  - id: jwt-jsonwebtoken
+    nombre: Tokens JWT con la librería jsonwebtoken
+    implica: >-
+      La API firma un JWT al iniciar sesión (jwt.sign) y lo comprueba en cada petición (jwt.verify),
+      normalmente desde la cabecera Authorization: Bearer. Hay que fijar el algoritmo permitido, el
+      emisor y la caducidad al verificar. Las contraseñas se guardan con hash mediante el paquete argon2
+      o bcrypt; es un requisito de la política.
+    pros:
+      - El servidor no guarda estado de sesión; varias instancias lo validan con la misma clave.
+      - Encaja con aplicaciones móviles y con servicios que llaman a la API.
+    contras:
+      - Un token ya emitido no se puede anular antes de que caduque, salvo que se añada una lista de revocación.
+      - Hay que decidir la caducidad, la rotación de claves y dónde guarda el cliente el token.
+      - Verificar sin restringir el algoritmo o sin comprobar emisor y caducidad es un fallo conocido.
+    docs: https://github.com/auth0/node-jsonwebtoken
+    revisado: 2026-11-10
