@@ -165,7 +165,7 @@ claramente.
 Necesitas Claude Code. Desde una terminal:
 
 ```bash
-claude plugin marketplace add fernando-delrio/agents
+claude plugin marketplace add fernando-delrio/lead-flow
 claude plugin install equipo-solo@equipo-solo
 ```
 
@@ -189,7 +189,7 @@ Para startups y consultoras que programan con IA y entregan software a clientes.
 ## ¿Te interesa?
 
 ¿Quieres probar `lead-flow` en tu equipo cuando esté lista la fase 1? Sigue el repositorio
-(**Watch → Custom → Releases**) o [abre una incidencia](https://github.com/fernando-delrio/agents/issues/new)
+(**Watch → Custom → Releases**) o [abre una incidencia](https://github.com/fernando-delrio/lead-flow/issues/new)
 contando tu caso.
 
 ## Para saber más

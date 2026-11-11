@@ -1,6 +1,6 @@
 # Diseño — Flujo de trabajo con IA controlado por la lead
 
-> **Estado:** borrador para aprobar · **Fecha:** 2026-11-10 · **Repositorio:** `fernando-delrio/agents`
+> **Estado:** borrador para aprobar · **Fecha:** 2026-11-10 · **Repositorio:** `fernando-delrio/lead-flow`
 > **Autor de las decisiones:** Fernando del Río. Lo marcado **[decisión de Claude]** lo propuse yo
 > y Fernando puede cambiarlo al leer.
 
@@ -335,7 +335,7 @@ son **[decisión de Claude]** salvo las marcadas como pendientes de Fernando.
    «se le pide a la lead»). Las transitivas no; solo pasan la auditoría de vulnerabilidades y
    licencias. No se fijan versiones desde la política: eso lo hace el archivo de bloqueo del
    ecosistema.
-6. **Mismo repositorio.** El producto vive en `fernando-delrio/agents` junto al plugin
+6. **Mismo repositorio.** El producto vive en `fernando-delrio/lead-flow` junto al plugin
    `equipo-solo`, en carpetas separadas: `plugin/` (lo actual), `cli/`, `catalogo/`, `acciones/`
    (puertas para Actions) y `ejemplos/`. Los siete agentes no cambian en la fase 1; se adaptan al
    trabajo en equipo en la fase 2, con la puerta 6.
