@@ -306,7 +306,7 @@ Valores por defecto (`cli/src/core/constants.ts`): `ramas.patron = 'ticket/<nume
 **Interfaces:**
 - Produce: `renderWorkflows(policy: Policy): Array<{ path: string; content: string }>`.
 - Reparto de eventos (restricción global):
-  - `lead-flow-puertas.yml`: `pull_request`. Jobs `pruebas`, `secretos`, `sast` y `dependencias` usan `fernando-delrio/agents/acciones/puertas@v0` con `puerta: <nombre>`, y cada uno sube `lead-flow-evidencias/<puerta>.json` como artefacto.
+  - `lead-flow-puertas.yml`: `pull_request`. Jobs `pruebas`, `secretos`, `sast` y `dependencias` usan `fernando-delrio/lead-flow/acciones/puertas@v0` con `puerta: <nombre>`, y cada uno sube `lead-flow-evidencias/<puerta>.json` como artefacto.
   - `lead-flow-decision.yml`: `pull_request_target`, `pull_request_review` y `workflow_run` de puertas. Jobs `integridad` y `aprobacion`; checkout de la **rama base**; nunca de la cabeza.
   - `lead-flow-informe.yml`: `pull_request_target` con `types: [closed]` si está integrada.
   - `lead-flow-excepciones.yml`: `issue_comment`.
